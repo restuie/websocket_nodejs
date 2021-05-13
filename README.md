@@ -1,8 +1,10 @@
 # websocket_nodejs
 
 git remote add origin https://github.com/restuie/websocket_nodejs.git
+
 git push -u origin master
 
+git clone https://github.com/restuie/websocket_nodejs.git
 
 
 https://hackmd.io/@Heidi-Liu/note-be201-express-practice
