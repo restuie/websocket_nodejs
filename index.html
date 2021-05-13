@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>WebSocket Chat</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var socket;
+		if (!window.WebSocket) {
+			window.WebSocket = window.MozWebSocket;
+		}
+		if (window.WebSocket) {
+			socket = new WebSocket("ws://192.168.1.120:3000");
+			socket.onmessage = function (event) {
+				var ta = document.getElementById('responseText');
+				ta.value = ta.value + '\n' + event.data
+			};
+			socket.onopen = function (event) {
+				var ta = document.getElementById('responseText');
+				ta.value = "連接開啟!";
+			};
+			socket.onclose = function (event) {
+				var ta = document.getElementById('responseText');
+				ta.value = ta.value + "連接關閉";
+			};
+		} else {
+			alert("你的瀏覽器不支援! WebSocket！");
+		}
+
+		function send(message) {
+			if (!window.WebSocket) {
+				return;
+			}
+			if (socket.readyState == WebSocket.OPEN) {
+				socket.send(message);
+			} else {
+				alert("連接沒有開啟.");
+			}
+		}
+	</script>
+	<form onsubmit="return false;">
+		<h3>WebSocket 聊天室：</h3>
+		<textarea id="responseText" style="width: 500px; height: 300px;"></textarea>
+		<br>
+		<input type="text" name="message" style="width: 300px" value="WebSocket 聊天室好好玩">
+		<input type="button" value="發送消息" onclick="send(this.form.message.value)">
+		<input type="button" onclick="javascript:document.getElementById('responseText').value=''" 
+			value="清空聊天室">
+	</form>
+	<br>
+	<br>
+</body>
+
+</html>
